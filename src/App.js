@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect} from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+function App(){
+    const [items, setItems] = useState([])
+
+    useEffect(() => {
+        fetch('https://tense-leg-warmers-bass.cyclic.app/users')
+        .then(res => res.json())
+        .then((result) => {
+            console.log(result)
+            setItems(result)
+        })
+}, [])
+    
+    return(
+    <div>
+        <h1>Users</h1>
+        <ul>
+        { items.map((item) => (
+            <li key = {item.id}>
+                <p>Name: {item.fname}</p>
+                <p>Lastname: {item.lname}</p>
+                <p>Email: {item.username}</p>
+            </li>
+        ))}
+        </ul>
     </div>
-  );
+  )
 }
 
-export default App;
+
+
+export default App
